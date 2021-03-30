@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { Navbar } from './Navbar/Navbar';
+import { Banner } from './Banner/Banner';
 
 const GlobalStyle = createGlobalStyle`
     Body {
@@ -17,6 +18,7 @@ function App() {
     <>
         <GlobalStyle />
         <Navbar />
+        <Banner/ >
         <div>Hello Sofia</div>
     </>
   );

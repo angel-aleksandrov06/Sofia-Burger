@@ -1,0 +1,1 @@
+export const burgerRed = "#f44336";

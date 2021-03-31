@@ -20,7 +20,7 @@ export function Navbar() {
     return (
         <NavbarStyled>
             <Logo>
-                Sofia Burger 🍔
+                Sofia Burger <span role="img" aria-label="sofia burger">🍔</span>
             </Logo>
         </NavbarStyled>
     );

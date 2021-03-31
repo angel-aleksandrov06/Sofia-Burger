@@ -21,7 +21,6 @@ function App() {
         <Navbar />
         <Banner/ >
         <Menu />
-        <div>Hello Sofia</div>
     </>
   );
 }

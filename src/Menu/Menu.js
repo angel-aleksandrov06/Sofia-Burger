@@ -8,16 +8,20 @@ const MenuStyled = styled.div`
 `;
 
 export function Menu() {
-    return <MenuStyled>
-        <h1> Menu </h1>
-        <FoodGrid>
-            {foods.map(x => (
-                <Food img={x.img} >
-                    <FoodLabel>
-                        {x.name}
-                    </FoodLabel>
-                </Food>
+    return (
+        <MenuStyled>
+            {Object.entries(foods).map(([sectionName, foods]) => (
+                <>
+                    <h1> {sectionName} </h1>
+                    <FoodGrid>
+                        {foods.map(x => (
+                            <Food img={x.img} >
+                                <FoodLabel>{x.name}</FoodLabel>
+                            </Food>
+                        ))}
+                    </FoodGrid>
+                </>
             ))}
-        </FoodGrid>
-    </MenuStyled>
+        </MenuStyled>
+    );
 };

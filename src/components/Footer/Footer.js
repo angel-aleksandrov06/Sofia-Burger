@@ -19,7 +19,7 @@ const FooterLogo = styled(Title)`
 const Footer = () => {
     return (
         <FooterComponent>
-            <FooterLogo>@ Sofia Burger </FooterLogo> <span class>developed by Angel Aleksandrov</span>
+            <FooterLogo>@ Sofia Burger </FooterLogo> <span className="">developed by Angel Aleksandrov</span>
         </FooterComponent>
     );
 };

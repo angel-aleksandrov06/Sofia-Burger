@@ -19,6 +19,7 @@ const Logo = styled(Title)`
     color: white;
     text-shadow: 1px 3px 4px #380502;
     text-decoration: none;
+    margin-right: 10px;
 `;
 
 const Linker = styled(Title)`
@@ -26,7 +27,7 @@ const Linker = styled(Title)`
     color: white;
     text-shadow: 1px 3px 4px #380502;
     text-decoration: none;
-    margin-right: 20px;
+    margin: 0px 10px;
 `;
 
 
@@ -36,12 +37,11 @@ const Navbar = () => {
         <NavbarStyled>
                 <Logo as={ Link } to="/">
                     Sofia Burger <span role="img" aria-label="sofia burger">🍔</span>
+                    <Linker as={ Link } to="/menu">Menu</Linker>
                 </Logo>
                 <ul className="navbar-ul">
-                    <Linker as={ Link } to="/menu">
-                    Menu
-                    </Linker>
-                    
+                    <Linker as={ Link } to="/login">Login</Linker>
+                    <Linker as={ Link } to="/register">Register</Linker>
                 </ul>
         </NavbarStyled>
     );

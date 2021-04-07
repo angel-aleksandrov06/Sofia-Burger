@@ -1,0 +1,89 @@
+import styled from 'styled-components';
+import { Component } from 'react';
+import { Title } from '../../Styles/title';
+import * as MenuServices from '../../Services/MenuServices'
+
+const DashBoardStyled = styled.main`
+    margin: 50px;
+`;
+
+export const DashboardWrapper = styled.section`
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    gap: 20px;
+    
+`;
+
+export const FoodLabel = styled.div`
+    position: absolute;
+    background-color: rgba(255, 255, 255, .8);
+    padding: 5px;
+`;
+
+export const PromotionFood = styled(Title)`
+    height: 180px;
+    padding: 10px;
+    font-size: 20px;
+    background-image: ${({ img }) => `url(${img});`};
+    background-position: center;
+    background-size: cover;
+    filter: contrast(65%);
+    border-radius: 7px;
+    margin-top: 5px;
+    transition-property: box-shadow margin-top filter;
+    transition-duration: 0.2s;
+    box-shadow: 0px 0px 3px 0px grey;
+    &:hover {
+        cursor: pointer;
+        filter: contrast(100%);
+        margin-top: 0px;
+        margin-bottom: 5px;
+        box-shadow: 0px 0px 10px 0px grey;
+    }
+`;
+
+
+class PromotionDashboard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            menu: [],
+        }
+    }
+
+    componentDidMount() {
+        MenuServices.getAll()
+        .then(res => {
+            res = res.reduce((res,food) => {
+                if (!res[food.section]) {
+                    res[food.section] = [];
+                }
+                res[food.section].push(food);
+                return res;
+            }, {});
+            this.setState({menu: res})
+        });
+    }
+
+    render() {
+        return (
+            <DashBoardStyled >
+                {Object.entries(this.state.menu).filter(([key, value]) => key ==='Promotion').map(([sectionName, foods]) => (
+                    <>
+                        <h2> Week promotions </h2>
+                        <DashboardWrapper>
+                            {foods.map(x => (
+                                <PromotionFood img={x.img} key={x.id} >
+                                    <FoodLabel>{x.name}</FoodLabel>
+                                </PromotionFood>
+                            ))}
+                        </DashboardWrapper>
+                    </>
+                ))}
+            </DashBoardStyled >
+        );
+    }
+}
+
+export default PromotionDashboard;

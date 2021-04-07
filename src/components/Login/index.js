@@ -5,6 +5,8 @@ import { Form } from "./Form";
 import Paper from "@material-ui/core/Paper";
 import * as Yup from "yup";
 
+import { auth } from '../../utils/firebase';
+
 const styles = theme => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -31,38 +33,47 @@ const validationSchema = Yup.object({
         .required("Enter your password")
 });
 
-class InputForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+const InputForm = (x) => {
 
-    submit = data => {
-        console.log(data);
+    const onLoginFormSubmitHandler = (e) => {
+
+        console.log(e);
+        const username = e.name;
+        const email = e.email;
+        const password = e.password;
+
+        console.log(username, email, password);
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                var user = userCredential.user;
+                console.log(userCredential);
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+              });
+
     };
-
-    render() {
-        const classes = this.props.classes;
-        const values = { name: "", email: "", confirmPassword: "", password: "" };
-        return (
-            <>
-                <div className={classes.wrapper}>
-                    <div className={classes.container}>
-                        <Paper elevation={1} className={classes.paper}>
-                            <h1>Log In</h1>
-                            <Formik
-                                render={props => <Form {...props} />}
-                                initialValues={values}
-                                validationSchema={validationSchema}
-                                onSubmit={this.submit}
-                            />
-                        </Paper>
-                    </div>
-
+    const classes = x.classes;
+    const values = { name: "", email: "", confirmPassword: "", password: "" };
+    return (
+        <>
+            <div className={classes.wrapper}>
+                <div className={classes.container}>
+                    <Paper elevation={1} className={classes.paper}>
+                        <h1>Log In</h1>
+                        <Formik
+                            render={props => <Form {...props} />}
+                            initialValues={values}
+                            validationSchema={validationSchema}
+                            onSubmit={onLoginFormSubmitHandler}
+                        />
+                    </Paper>
                 </div>
-            </>
-        );
-    }
+
+            </div>
+        </>
+    );
 }
 
 export default withStyles(styles)(InputForm);

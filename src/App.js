@@ -9,6 +9,7 @@ import PromotionDashboard from './components/PromotionDashboard';
 import Footer from './components/Footer/Footer';
 import Register from './components/Register/index';
 import Login from './components/Login/index';
+import './utils/firebase';
 
 function App() {
     const [openFood, setOpenFood] = useState();

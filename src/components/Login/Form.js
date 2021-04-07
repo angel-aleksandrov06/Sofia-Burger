@@ -9,7 +9,7 @@ import EmailIcon from "@material-ui/icons/Email";
 
 export const Form = props => {
 	const {
-		values: { name, email, password, confirmPassword },
+		values: { email, password, },
 		errors,
 		touched,
 		handleSubmit,
@@ -19,11 +19,11 @@ export const Form = props => {
 	} = props;
 	// console.table(props);
 
-	const change = (name, e) => {
-		e.persist();
-		handleChange(e);
-		setFieldTouched(name, true, false);
-	};
+	// const change = (name, e) => {
+	// 	e.persist();
+	// 	handleChange(e);
+	// 	setFieldTouched(name, true, false);
+	// };
 
 	return (
 		<form onSubmit={handleSubmit}>

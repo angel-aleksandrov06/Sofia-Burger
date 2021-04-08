@@ -6,3 +6,10 @@ export const getAll = () => {
         .then(res => res.json())
         .catch(er => console.log(er));
 };
+
+export function formatPrice(price) {
+    return price.toLocaleString("bg-BG", {
+      style: "currency",
+      currency: "BGN"
+    });
+  }

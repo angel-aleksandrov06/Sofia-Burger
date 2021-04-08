@@ -10,7 +10,7 @@ const MenuStyled = styled.div`
 class Menu extends Component {
     constructor(props){
         super(props);
-
+        console.log(props);
         this.state = {
             menu: [],
         }
@@ -42,8 +42,13 @@ class Menu extends Component {
                         <h1> {sectionName} </h1>
                         <FoodGrid>
                             {foods.map(x => (
-                                <Food img={x.img} key={x.id} >
-                                    <FoodLabel>{x.name}</FoodLabel>
+                                <Food img={x.img} key={x.id} onClick={() => {
+                                    this.props.setOpenFood(x);
+                                  }}>
+                                    <FoodLabel>
+                                        <div>{x.name}</div>
+                                        <div>{MenuServices.formatPrice(x.price)}</div>
+                                        </FoodLabel>
                                 </Food>
                             ))}
                         </FoodGrid>

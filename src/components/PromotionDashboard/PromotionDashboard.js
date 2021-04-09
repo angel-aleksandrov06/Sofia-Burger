@@ -5,13 +5,22 @@ import * as MenuServices from '../../Services/MenuServices'
 
 const DashBoardStyled = styled.main`
 margin: 0px 400px 50px 20px;
+
+@media(max-width: 400px){ 
+        width: 90%; 
+        margin: 10px; 
+      }
 `;
 
 export const DashboardWrapper = styled.section`
     display: grid;
     grid-template-columns: 1fr 1fr ;
     gap: 20px;
-    
+    margin-bottom: 80px;
+
+    @media(max-width: 400px){ 
+        grid-template-columns: 1fr; 
+      }
 `;
 
 export const FoodLabel = styled.div`
@@ -82,8 +91,13 @@ class PromotionDashboard extends Component {
                         <h2> Week promotions </h2>
                         <DashboardWrapper>
                             {foods.map(x => (
-                                <PromotionFood img={x.img} key={x.id} >
-                                    <FoodLabel>{x.name}</FoodLabel>
+                                <PromotionFood img={x.img} key={x.id} onClick={() => {
+                                    this.props.setOpenFood(x);
+                                  }}>
+                                    <FoodLabel>
+                                        <div>{x.name}</div>
+                                        <div>{MenuServices.formatPrice(x.price)}</div>
+                                    </FoodLabel>
                                 </PromotionFood>
                             ))}
                         </DashboardWrapper>

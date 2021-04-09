@@ -5,6 +5,11 @@ import * as MenuServices from '../../Services/MenuServices'
 
 const MenuStyled = styled.div`
     margin: 0px 400px 50px 20px;
+
+    @media(max-width: 400px){ 
+        width: 90%; 
+        margin: 10px; 
+      }
 `;
 
 class Menu extends Component {

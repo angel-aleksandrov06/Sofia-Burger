@@ -38,11 +38,10 @@ const InputForm = (x) => {
     const onLoginFormSubmitHandler = (e) => {
 
         console.log(e);
-        const username = e.name;
         const email = e.email;
         const password = e.password;
 
-        console.log(username, email, password);
+        console.log(email, password);
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
                 var user = userCredential.user;

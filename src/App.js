@@ -28,7 +28,7 @@ function App() {
         <Order {...orders} {...openFood} />
         <Banner/ >
         <Switch>
-            <Route path="/" exact component={ PromotionDashboard } />
+            <Route path="/" exact render={() => <PromotionDashboard {... openFood}/>} />
             <Route path="/menu" exact render={() => <Menu {... openFood}/>} />
             <Route path="/register" component={ Register } />
             <Route path="/login" component={ Login } />

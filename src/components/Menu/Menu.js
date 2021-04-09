@@ -17,7 +17,15 @@ class Menu extends Component {
     }
 
     componentDidMount() {
+        const foods = [];
         MenuServices.getAll()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                
+                foods.push(doc.data())
+            });
+            return foods
+        })
         .then(res => {
             res = res.reduce((res,food) => {
                 if (!res[food.section]) {

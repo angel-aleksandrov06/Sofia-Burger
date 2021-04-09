@@ -4,7 +4,7 @@ import { Title } from '../../Styles/title';
 import * as MenuServices from '../../Services/MenuServices'
 
 const DashBoardStyled = styled.main`
-    margin: 50px;
+margin: 0px 400px 50px 20px;
 `;
 
 export const DashboardWrapper = styled.section`
@@ -53,7 +53,15 @@ class PromotionDashboard extends Component {
     }
 
     componentDidMount() {
+        const foods = [];
         MenuServices.getAll()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                
+                foods.push(doc.data())
+            });
+            return foods
+        })
         .then(res => {
             res = res.reduce((res,food) => {
                 if (!res[food.section]) {

@@ -1,9 +1,10 @@
-const url = 'http://localhost:5001/foods';
+import db from '../utils/firebase'
+
+
+export const url = 'https://sofia-burger-default-rtdb.europe-west1.firebasedatabase.app/foods.json';
 
 export const getAll = () => {
-
-    return fetch(url)
-        .then(res => res.json())
+    return db.firestore().collection("foods").get()
         .catch(er => console.log(er));
 };
 

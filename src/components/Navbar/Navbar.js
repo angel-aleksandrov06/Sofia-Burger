@@ -27,22 +27,46 @@ const Linker = styled(Title)`
     color: white;
     text-shadow: 1px 3px 4px #380502;
     text-decoration: none;
-    margin: 0px 10px;
+    padding: 7px;
+    &:hover {
+        cursor: pointer;
+        color: ${burgerRed};
+        border: white;
+        border-radius: 1rem;
+        background-color: white;
+        box-shadow: 0px 0px 10px 0px grey;
+    }
+`;
+
+const Greeter = styled(Title)`
+    font-size: 18px;
+    color: white;
+    text-shadow: 1px 3px 4px #380502;
+    text-decoration: none;
+    padding: 7px;
 `;
 
 
 
-const Navbar = () => {
+const Navbar = ({
+    isAuthenticated,
+    username
+}) => {
     return (
         <NavbarStyled>
                 <Logo as={ Link } to="/">
                     Sofia Burger <span role="img" aria-label="sofia burger">🍔</span>
                     <Linker as={ Link } to="/menu">Menu</Linker>
                 </Logo>
-                <ul className="navbar-ul">
-                    <Linker as={ Link } to="/login">Login</Linker>
-                    <Linker as={ Link } to="/register">Register</Linker>
-                </ul>
+                {isAuthenticated
+                    ? <Greeter>Wellcome, {username}!</Greeter>
+                    : <Greeter>Wellcome, Guest!</Greeter>}
+                
+                <div className="navbar-ul">
+                    {isAuthenticated
+                    ? <><Linker as={ Link } to="/logout">Logout</Linker></>
+                    : <><Linker as={ Link } to="/login">Login</Linker><Linker as={ Link } to="/register">Register</Linker></>}
+                </div>
         </NavbarStyled>
     );
 };

@@ -13,7 +13,8 @@ const styles = theme => ({
         marginBottom: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
-        padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`
+        padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
+        boxShadow: `0px 3px 15px 5px`,
     },
     container: {
         minWidth: "400px",
@@ -33,7 +34,7 @@ const validationSchema = Yup.object({
         .required("Enter your password")
 });
 
-const InputForm = (x) => {
+const InputForm = (props) => {
 
     const onLoginFormSubmitHandler = (e) => {
 
@@ -45,7 +46,7 @@ const InputForm = (x) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
                 var user = userCredential.user;
-                console.log(userCredential);
+                props.history.push('/');
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -53,7 +54,7 @@ const InputForm = (x) => {
               });
 
     };
-    const classes = x.classes;
+    const classes = props.classes;
     const values = { name: "", email: "", confirmPassword: "", password: "" };
     return (
         <>

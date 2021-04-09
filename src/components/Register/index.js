@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./Form";
 import Paper from "@material-ui/core/Paper";
 import * as Yup from "yup";
-import './Register.css'
+import { auth } from "../../utils/firebase";
 
 const styles = theme => ({
     paper: {
@@ -12,7 +12,8 @@ const styles = theme => ({
         marginBottom: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
-        padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`
+        padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
+        boxShadow: `0px 3px 15px 5px`,
     },
     container: {
         minWidth: "400px",
@@ -24,7 +25,6 @@ const styles = theme => ({
 });
 
 const validationSchema = Yup.object({
-    name: Yup.string("Enter a name").required("Name is required"),
     email: Yup.string("Enter your email")
         .email("Enter a valid email")
         .required("Email is required"),
@@ -42,13 +42,20 @@ class InputForm extends Component {
         this.state = {};
     }
 
-    submit = data => {
-        console.log(data);
+    submit = (e) => {
+        const email = e.email;
+        const password = e.password;
+    
+        auth.createUserWithEmailAndPassword(email, password)
+        .then(x => {
+            this.props.history.push('/');
+        })
+        .catch(err => console.log(err));
     };
 
     render() {
         const classes = this.props.classes;
-        const values = { name: "", email: "", confirmPassword: "", password: "" };
+        const values = {email: "", confirmPassword: "", password: "" };
         return (
             <>
                 <div className={classes.wrapper}>

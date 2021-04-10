@@ -15,7 +15,7 @@ const MenuStyled = styled.div`
 class Menu extends Component {
     constructor(props){
         super(props);
-        console.log(props);
+        // console.log(props);
         this.state = {
             menu: [],
         }
@@ -25,10 +25,10 @@ class Menu extends Component {
         const foods = [];
         MenuServices.getAll()
         .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                
-                foods.push(doc.data())
+            querySnapshot.forEach((d) => {
+                foods.push({ ...d.data(), id: d.id })
             });
+            // console.log(foods);
             return foods
         })
         .then(res => {
@@ -56,6 +56,7 @@ class Menu extends Component {
                         <FoodGrid>
                             {foods.map(x => (
                                 <Food img={x.img} key={x.id} onClick={() => {
+                                    console.log(x);
                                     this.props.setOpenFood(x);
                                   }}>
                                     <FoodLabel>

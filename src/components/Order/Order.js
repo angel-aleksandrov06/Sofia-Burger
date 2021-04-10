@@ -6,6 +6,9 @@ import {
 } from "../FoodDialog/FoodDialog";
 import { formatPrice } from "../../Services/MenuServices";
 import { getPrice } from "../FoodDialog/FoodDialog";
+import AuthContext from '../../contexts/AuthContext';
+import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const OrderStyled = styled.div`
   position: fixed;
@@ -59,6 +62,8 @@ const DetailItem = styled.div`
 `;
 
 export function Order({ orders, setOrders, setOpenFood }) {
+    const {isAuthenticated, username} = useContext(AuthContext);
+    const history = useHistory();
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0);
@@ -129,7 +134,11 @@ export function Order({ orders, setOrders, setOpenFood }) {
          </OrderContent>
       )}
       <DialogFooter>
-        <ConfirmButton>Checkout</ConfirmButton>
+        <ConfirmButton onClick={ ()=> {
+            if(!isAuthenticated){
+                history.push('/login');
+            }
+        }}>Checkout</ConfirmButton>
       </DialogFooter>
     </OrderStyled>
   );

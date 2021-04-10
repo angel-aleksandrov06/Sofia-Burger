@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { burgerRed } from '../../Styles/colors';
 import { Title } from '../../Styles/title';
 import './Navbar.css';
+import AuthContext from '../../contexts/AuthContext';
+import { useContext } from 'react';
 
 const NavbarStyled = styled.div`
     background-color: ${burgerRed};
@@ -48,10 +50,9 @@ const Greeter = styled(Title)`
 
 
 
-const Navbar = ({
-    isAuthenticated,
-    username
-}) => {
+const Navbar = () => {
+    const {isAuthenticated, username, isAdmin} = useContext(AuthContext)
+
     return (
         <NavbarStyled>
                 <Logo as={ Link } to="/">
@@ -63,9 +64,14 @@ const Navbar = ({
                     : <Greeter>Wellcome, Guest!</Greeter>}
                 
                 <div className="navbar-ul">
+                    {isAdmin
+                    ?<Linker as={ Link } to="/create-product">Create Product</Linker>
+                    : null
+                    }
                     {isAuthenticated
-                    ? <><Linker as={ Link } to="/logout">Logout</Linker></>
+                    ? <Linker as={ Link } to="/logout">Logout</Linker>
                     : <><Linker as={ Link } to="/login">Login</Linker><Linker as={ Link } to="/register">Register</Linker></>}
+                    
                 </div>
         </NavbarStyled>
     );

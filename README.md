@@ -1,11 +1,17 @@
 # Sofia Burger
 
 Sofia-Burger is React.js application. There you can choose and order your favorite burgers.
+If you are admin, you can create a new Products and delete products.
 
 :dart:  My project for the ReactJS course at SoftUni.
 
 Test account:
+
+--User--
 gambito@abv.bg - password: 123123123
+
+--Admin--
+admin@admin.bg - password: 123123123
 
 ## :hammer_and_pick: Built With
 
@@ -23,6 +29,8 @@ gambito@abv.bg - password: 123123123
 - Firebase Authentication
 - Deployed in Firebase
 - Responsive Design
+- npm 
+- HOC
 
 -------------------------------------------------------------
 ### Deployment

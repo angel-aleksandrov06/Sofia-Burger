@@ -87,11 +87,11 @@ class PromotionDashboard extends Component {
         return (
             <DashBoardStyled >
                 {Object.entries(this.state.menu).filter(([key, value]) => key ==='Promotion').map(([sectionName, foods]) => (
-                    <>
+                    <div key={sectionName}>
                         <h2> Week promotions </h2>
                         <DashboardWrapper>
                             {foods.map(x => (
-                                <PromotionFood img={x.img} key={x.id} onClick={() => {
+                                <PromotionFood key={x.id} img={x.img} onClick={() => {
                                     this.props.setOpenFood(x);
                                   }}>
                                     <FoodLabel>
@@ -101,7 +101,7 @@ class PromotionDashboard extends Component {
                                 </PromotionFood>
                             ))}
                         </DashboardWrapper>
-                    </>
+                    </div>
                 ))}
             </DashBoardStyled >
         );

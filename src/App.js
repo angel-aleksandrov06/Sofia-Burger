@@ -9,12 +9,15 @@ import PromotionDashboard from './components/PromotionDashboard';
 import Footer from './components/Footer/Footer';
 import Register from './components/Register/index';
 import Login from './components/Login/index';
+import CreateProduct from './components/ProductCreate/index';
 import { auth } from './utils/firebase';
 import { FoodDialog } from './components/FoodDialog/FoodDialog';
 import { Order } from './components/Order/Order';
 import { useOpenFood } from './Hooks/useOpenFood';
 import { useOrders } from './Hooks/useOrders';
 import { useTitle } from './Hooks/useTitle';
+import AuthContext from './contexts/AuthContext';
+import isAuth from './hoc/isAuth';
 
 function App() {
 
@@ -27,6 +30,7 @@ function App() {
         auth.onAuthStateChanged((userCredential) => {
             if (userCredential){
                 setUser(userCredential);
+                console.log(userCredential)
             }else{
                 setUser(null);
             }
@@ -35,19 +39,21 @@ function App() {
 
     const authInfo = {
         isAuthenticated: Boolean(user),
-        username: user?.email
+        username: user?.email,
+        isAdmin: Boolean(user?.uid === 'B7qaGTNVddPZxsnFjCsVkjSMxCK2'),
     };
 
   return (
-    <>
+    <AuthContext.Provider value={authInfo} >
         <GlobalStyle />
         <FoodDialog {...openFood} {...orders} />
-        <Navbar {...authInfo}/>
+        <Navbar />
         <Order {...orders} {...openFood} />
         <Banner/ >
         <Switch>
             <Route path="/" exact render={() => <PromotionDashboard {... openFood}/>} />
             <Route path="/menu" exact render={() => <Menu {... openFood}/>} />
+            <Route path="/create-product" component={ isAuth(CreateProduct) } />
             <Route path="/register" component={ Register } />
             <Route path="/login" component={ Login } />
             <Route path="/logout" render={props => {
@@ -56,7 +62,7 @@ function App() {
             }} />
         </Switch>
         <Footer />
-    </>
+    </AuthContext.Provider>
   );
 }
 

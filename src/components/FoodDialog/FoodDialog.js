@@ -7,6 +7,10 @@ import { QuantityInput } from "./QuantityInput";
 import { useQuantity } from "../../Hooks/useQuantity";
 import { Toppings } from "./Toppings";
 import { useToppings } from "../../Hooks/useToppings";
+import AuthContext from '../../contexts/AuthContext';
+import { useContext } from 'react';
+import db from '../../utils/firebase';
+import { useHistory } from "react-router-dom";
 
 const Dialog = styled.div`
   width: 500px;
@@ -59,6 +63,18 @@ export const ConfirmButton = styled(Title)`
   `}
 `;
 
+export const DeleteButton = styled(Title)`
+  margin: 10px;
+  color: white;
+  height: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  cursor: pointer;
+  background-color: ${burgerRed};
+  `;
+
 const DialogShadow = styled.div`
   position: fixed;
   height: 100%;
@@ -86,7 +102,7 @@ const DialogBannerName = styled(FoodLabel)`
 const pricePerTopping = 0.5;
 
 export function getPrice(order) {
-    console.log(order);
+    // console.log(order);
   return (
     order.quantity * 
     (order.price +
@@ -99,60 +115,72 @@ function hasToppings(food) {
 }
 
 function FoodDialogContainer({ openFood, setOpenFood, setOrders, orders }) {
-  const quantity = useQuantity(openFood && openFood.quantity);
-  const toppings = useToppings(openFood.toppings);
-  const isEditing = openFood.index > -1;
+    const {isAuthenticated, username, isAdmin} = useContext(AuthContext);
+    let history = useHistory();
+    const quantity = useQuantity(openFood && openFood.quantity);
+    const toppings = useToppings(openFood.toppings);
+    const isEditing = openFood.index > -1;
+    console.log(openFood.id);
 
-  function close() {
-    setOpenFood();
-  }
+    function close() {
+        setOpenFood();
+    }
 
-  const order = {
-    ...openFood,
-    quantity: quantity.value,
-    toppings: toppings.toppings,
-  };
+    const order = {
+        ...openFood,
+        quantity: quantity.value,
+        toppings: toppings.toppings,
+    };
 
-  function editOrder() {
-    const newOrders = [...orders];
-    newOrders[openFood.index] = order;
-    setOrders(newOrders);
-    close();
-  }
+    function editOrder() {
+        const newOrders = [...orders];
+        newOrders[openFood.index] = order;
+        setOrders(newOrders);
+        close();
+    }
 
-  function addToOrder() {
-    setOrders([...orders, order]);
-    close();
-  }
+    function addToOrder() {
+        setOrders([...orders, order]);
+        close();
+    }
 
-  return (
-    <>
-      <DialogShadow onClick={close} />
-      <Dialog>
-        <DialogBanner img={openFood.img}>
-          <DialogBannerName> {openFood.name} </DialogBannerName>
-        </DialogBanner>
-        <DialogContent>
-          <QuantityInput quantity={quantity} />
-          {hasToppings(openFood) && (
-            <>
-              <h3> Would you like toppings? </h3>
-              <Toppings {...toppings} />
-            </>
-          )}
-        </DialogContent>
-        <DialogFooter>
-          <ConfirmButton
-          onClick={addToOrder}
-            onClick={isEditing ? editOrder : addToOrder}
-          >
-            {isEditing ? `Update order: ` : `Add to order: `}
-            {formatPrice((getPrice(order)))}
-          </ConfirmButton>
-        </DialogFooter>
-      </Dialog>
-    </>
-  );
+    return (
+        <>
+        <DialogShadow onClick={close} />
+        <Dialog>
+            <DialogBanner img={openFood.img}>
+            <DialogBannerName> {openFood.name} </DialogBannerName>
+            </DialogBanner>
+            <DialogContent>
+            <QuantityInput quantity={quantity} />
+            {hasToppings(openFood) && (
+                <>
+                <h3> Would you like toppings? </h3>
+                <Toppings {...toppings} />
+                </>
+            )}
+            </DialogContent>
+            <DialogFooter>
+            <ConfirmButton
+            onClick={addToOrder}
+                onClick={isEditing ? editOrder : addToOrder}
+            >
+                {isEditing ? `Update order: ` : `Add to order: `}
+                {formatPrice((getPrice(order)))}
+            </ConfirmButton>
+            {isAdmin
+                    ?<DeleteButton onClick={() => {
+                        db.firestore().collection("foods").doc(openFood.id.toString()).delete()
+                        .then(close())
+                        .then(history.push('/'))
+                        .catch(err => console.log(err));
+                    }} >Delete Product</DeleteButton>
+                    : null
+                    }
+            </DialogFooter>
+        </Dialog>
+        </>
+    );
 }
 
 export function FoodDialog(props) {

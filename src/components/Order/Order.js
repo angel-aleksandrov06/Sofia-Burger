@@ -62,7 +62,7 @@ const DetailItem = styled.div`
   font-size: 10px;
 `;
 
-export function Order({ orders, setOrders, setOpenFood }) {
+export function Order({ orders, setOrders, setOpenFood, setOpenOrderDialog }) {
     const {isAuthenticated, username} = useContext(AuthContext);
     const history = useHistory();
   const subtotal = orders.reduce((total, order) => {
@@ -134,13 +134,15 @@ export function Order({ orders, setOrders, setOpenFood }) {
            </OrderContainer>
          </OrderContent>
       )}
-      <DialogFooter>
+      {orders.length > 0 && <DialogFooter>
         <ConfirmButton onClick={ ()=> {
-            if(!isAuthenticated){
+            if(isAuthenticated){
+                setOpenOrderDialog(true);
+            }else{
                 history.push('/login');
             }
         }}>Checkout</ConfirmButton>
-      </DialogFooter>
+      </DialogFooter>}
     </OrderStyled>
   );
 }

@@ -18,12 +18,15 @@ import { useOrders } from './Hooks/useOrders';
 import { useTitle } from './Hooks/useTitle';
 import AuthContext from './contexts/AuthContext';
 import isAuth from './hoc/isAuth';
+import { OrderDialog } from './components/Order/OrderDialog';
+import { useOrderDialog } from './Hooks/useOrderDialog';
 
 function App() {
 
     const [user, setUser] = useState(null);
     const openFood = useOpenFood();
     const orders = useOrders();
+    const orderDialog = useOrderDialog();
     useTitle({...openFood, ...orders});
 
     useEffect(() => {
@@ -46,9 +49,10 @@ function App() {
   return (
     <AuthContext.Provider value={authInfo} >
         <GlobalStyle />
+        <OrderDialog {...orderDialog} {...orders} />
         <FoodDialog {...openFood} {...orders} />
         <Navbar />
-        <Order {...orders} {...openFood} />
+        <Order {...orders} {...openFood} {...orderDialog} />
         <Banner/ >
         <Switch>
             <Route path="/" exact render={() => <PromotionDashboard {... openFood}/>} />

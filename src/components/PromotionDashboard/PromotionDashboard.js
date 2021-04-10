@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { Component } from 'react';
+import styled from 'styled-components';
+
 import { Title } from '../../Styles/title';
 import * as MenuServices from '../../Services/MenuServices'
 

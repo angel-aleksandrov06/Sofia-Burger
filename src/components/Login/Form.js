@@ -72,7 +72,7 @@ export const Form = props => {
 			>
 				Sign In
 			</Button>
-            <Link to="/register">
+            <Link to="/register" style={{textDecoration: "none"}}>
                 <Button variant="contained" color="secondary"
                     style={{marginTop: "10px"}}
                     fullWidth

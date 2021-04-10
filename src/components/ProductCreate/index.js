@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { Formik } from "formik";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./Form";
@@ -60,7 +61,8 @@ class InputForm extends Component {
             section: section,
             price: price,
         })
-        .then(this.props.history.push('/menu'));
+        .then(this.props.history.push('/menu'))
+        .catch(err => console.log(err));
     };
 
     render() {

@@ -43,6 +43,7 @@ export const DialogFooter = styled.div`
   height: 60px;
   display: flex;
   justify-content: center;
+
   @media(max-width: 400px){ 
     width: 100%; 
     height: auto;
@@ -54,7 +55,7 @@ export const DialogFooter = styled.div`
 export const ConfirmButton = styled(Title)`
   margin: 10px;
   color: white;
-  height: 20px;
+  height: 40px;
   border-radius: 5px;
   padding: 10px;
   text-align: center;
@@ -73,7 +74,7 @@ export const ConfirmButton = styled(Title)`
 export const DeleteButton = styled(Title)`
   margin: 10px;
   color: white;
-  height: 20px;
+  height: 40px;
   border-radius: 5px;
   padding: 10px;
   text-align: center;

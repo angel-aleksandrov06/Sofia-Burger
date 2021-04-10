@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Link } from 'react-router-dom';
 
 import Button from "@material-ui/core/Button";
@@ -91,7 +90,7 @@ export const Form = props => {
 			>
 				Submit
 			</Button>
-            <Link to="/login">
+            <Link to="/login" style={{textDecoration: "none"}}>
                 <Button variant="contained" color="secondary"
                     style={{marginTop: "10px"}}
                     fullWidth

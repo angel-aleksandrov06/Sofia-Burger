@@ -1,14 +1,12 @@
+import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import {
-  DialogContent,
-  DialogFooter,
-  ConfirmButton
-} from "../FoodDialog/FoodDialog";
+
+import {DialogContent, DialogFooter, ConfirmButton } from "../FoodDialog/FoodDialog";
 import { formatPrice } from "../../Services/MenuServices";
 import { getPrice } from "../FoodDialog/FoodDialog";
 import AuthContext from '../../contexts/AuthContext';
-import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import db from '../../utils/firebase';
 
 const OrderStyled = styled.div`
   position: fixed;
@@ -112,7 +110,7 @@ export function Order({ orders, setOrders, setOpenFood, setOpenOrderDialog }) {
                    .map(topping => topping.name)
                    .join(", ")}
                </DetailItem>
-               {order.choice && <DetailItem>{order.choice}</DetailItem>}
+               {/* {order.choice && <DetailItem>{order.choice}</DetailItem>} */}
              </OrderContainer>
            ))}
            <OrderContainer>
@@ -138,6 +136,11 @@ export function Order({ orders, setOrders, setOpenFood, setOpenOrderDialog }) {
         <ConfirmButton onClick={ ()=> {
             if(isAuthenticated){
                 setOpenOrderDialog(true);
+                db.firestore().collection("orders").add({
+                    username: username,
+                    orders: orders
+                })
+                .catch(err => console.log(err));
             }else{
                 history.push('/login');
             }

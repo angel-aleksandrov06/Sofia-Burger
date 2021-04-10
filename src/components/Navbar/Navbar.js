@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import { Link, } from 'react-router-dom'
 import styled from 'styled-components';
+
 import { burgerRed } from '../../Styles/colors';
 import { Title } from '../../Styles/title';
-import './Navbar.css';
 import AuthContext from '../../contexts/AuthContext';
-import { useContext } from 'react';
+import './Navbar.css';
 
 const NavbarStyled = styled.div`
     background-color: ${burgerRed};

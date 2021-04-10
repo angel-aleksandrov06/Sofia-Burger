@@ -61,13 +61,12 @@ class Menu extends Component {
                         <FoodGrid>
                             {foods.map(x => (
                                 <Food img={x.img} key={x.id} onClick={() => {
-                                    console.log(x);
                                     this.props.setOpenFood(x);
                                   }}>
                                     <FoodLabel>
                                         <div>{x.name}</div>
                                         <div>{MenuServices.formatPrice(x.price)}</div>
-                                        </FoodLabel>
+                                    </FoodLabel>
                                 </Food>
                             ))}
                         </FoodGrid>

@@ -24,6 +24,7 @@ const Dialog = styled.div`
   flex-direction: column;
   
   @media(max-width: 400px){ 
+    top: 122px;
     width: 100%; 
     left: 0px; 
     z-index: 12; 
@@ -32,7 +33,7 @@ const Dialog = styled.div`
 
 export const DialogContent = styled.div`
   overflow: auto;
-  min-height: 100px;
+  min-height: 80px;
   padding: 0px 40px;
   padding-bottom: 80px;
 `;
@@ -42,6 +43,12 @@ export const DialogFooter = styled.div`
   height: 60px;
   display: flex;
   justify-content: center;
+  @media(max-width: 400px){ 
+    width: 100%; 
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ConfirmButton = styled(Title)`

@@ -109,7 +109,6 @@ const DialogBannerName = styled(FoodLabel)`
 const pricePerTopping = 0.5;
 
 export function getPrice(order) {
-    // console.log(order);
   return (
     order.quantity * 
     (order.price +
@@ -127,7 +126,6 @@ function FoodDialogContainer({ openFood, setOpenFood, setOrders, orders }) {
     const quantity = useQuantity(openFood && openFood.quantity);
     const toppings = useToppings(openFood.toppings);
     const isEditing = openFood.index > -1;
-    console.log(openFood.id);
 
     function close() {
         setOpenFood();

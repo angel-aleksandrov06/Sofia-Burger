@@ -40,7 +40,12 @@ class Menu extends Component {
                 return res;
             }, {});
             this.setState({menu: res})
-        });
+        })
+        .catch(err => console.log(err));
+
+        if (Math.random()> 0.5) {
+            throw new Error('Upsss Error');
+        }
     }
 
     componentDidUpdate() {

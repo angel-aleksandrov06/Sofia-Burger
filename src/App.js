@@ -6,19 +6,20 @@ import Navbar from './components/Navbar/Navbar';
 import { Banner } from './components/Banner/Banner';
 import Menu from './components/Menu/Menu';
 import PromotionDashboard from './components/PromotionDashboard';
-import Footer from './components/Footer/Footer';
 import Register from './components/Register/index';
 import Login from './components/Login/index';
 import CreateProduct from './components/ProductCreate/index';
+import Footer from './components/Footer/Footer';
 import { auth } from './utils/firebase';
 import { FoodDialog } from './components/FoodDialog/FoodDialog';
 import { Order } from './components/Order/Order';
+import { OrderDialog } from './components/Order/OrderDialog';
+import CustomErrorBoundary from './components/CustomErrorBoundary/CustomErrorBoundary';
+import AuthContext from './contexts/AuthContext';
+import isAuth from './hoc/isAuth';
 import { useOpenFood } from './Hooks/useOpenFood';
 import { useOrders } from './Hooks/useOrders';
 import { useTitle } from './Hooks/useTitle';
-import AuthContext from './contexts/AuthContext';
-import isAuth from './hoc/isAuth';
-import { OrderDialog } from './components/Order/OrderDialog';
 import { useOrderDialog } from './Hooks/useOrderDialog';
 
 function App() {
@@ -27,14 +28,13 @@ function App() {
     const openFood = useOpenFood();
     const orders = useOrders();
     const orderDialog = useOrderDialog();
-    useTitle({...openFood, ...orders});
+    useTitle({ ...openFood, ...orders });
 
     useEffect(() => {
         auth.onAuthStateChanged((userCredential) => {
-            if (userCredential){
+            if (userCredential) {
                 setUser(userCredential);
-                console.log(userCredential)
-            }else{
+            } else {
                 setUser(null);
             }
         })
@@ -46,28 +46,30 @@ function App() {
         isAdmin: Boolean(user?.uid === 'B7qaGTNVddPZxsnFjCsVkjSMxCK2'),
     };
 
-  return (
-    <AuthContext.Provider value={authInfo} >
-        <GlobalStyle />
-        <OrderDialog {...orderDialog} {...orders} />
-        <FoodDialog {...openFood} {...orders} />
-        <Navbar />
-        <Order {...orders} {...openFood} {...orderDialog} />
-        <Banner/ >
-        <Switch>
-            <Route path="/" exact render={() => <PromotionDashboard {... openFood}/>} />
-            <Route path="/menu" exact render={() => <Menu {... openFood}/>} />
-            <Route path="/create-product" component={ isAuth(CreateProduct) } />
-            <Route path="/register" component={ Register } />
-            <Route path="/login" component={ Login } />
-            <Route path="/logout" render={props => {
-                auth.signOut();
-                return <Redirect to="/"/>
-            }} />
-        </Switch>
-        <Footer />
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={authInfo} >
+            <CustomErrorBoundary>
+                <GlobalStyle />
+                <OrderDialog {...orderDialog} {...orders} />
+                <FoodDialog {...openFood} {...orders} />
+                <Navbar />
+                <Order {...orders} {...openFood} {...orderDialog} />
+                <Banner />
+                <Switch>
+                    <Route path="/" exact render={() => <PromotionDashboard {...openFood} />} />
+                    <Route path="/menu" exact render={() => <Menu {...openFood} />} />
+                    <Route path="/create-product" component={isAuth(CreateProduct)} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/logout" render={props => {
+                        auth.signOut();
+                        return <Redirect to="/" />
+                    }} />
+                </Switch>
+                <Footer />
+            </CustomErrorBoundary>
+        </AuthContext.Provider>
+    );
 }
 
 export default App;

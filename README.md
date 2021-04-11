@@ -29,7 +29,7 @@ admin@admin.bg - password: 123123123
 - Firebase Authentication
 - Deployed in Firebase
 - Responsive Design
-- npm 
+- CustomErrorBoundary
 - HOC
 
 -------------------------------------------------------------
